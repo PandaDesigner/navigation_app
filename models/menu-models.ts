@@ -3,7 +3,7 @@ import type { Href } from 'expo-router';
 import type { ComponentProps } from 'react';
 
 export type IconName = ComponentProps<typeof Ionicons>['name'];
-export type ItemRouter = "index" | "home" | "task"
+export type ItemRouter = "index" | "home" | "(task)"
 
 export interface NavigationItem {
     id: string,
