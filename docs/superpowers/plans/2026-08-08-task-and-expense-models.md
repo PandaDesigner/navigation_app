@@ -1,6 +1,6 @@
 # Task and Expense Models Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Provide strictly typed, mock-backed shared domain contracts for multi-user tasks, family expense sharing, reminders, locations, and lazy recurrence before UI or Supabase work.
 
@@ -41,7 +41,7 @@
 **Interfaces:**
 - Produces: `npm test -- --run` executes `tests/models/**/*.test.ts` in Node.
 
-- [ ] **Step 1: Add a failing smoke test**
+- [x] **Step 1: Add a failing smoke test**
 
 Create `tests/models/test-helpers.ts` and `tests/models/test-helpers.test.ts`:
 
@@ -57,13 +57,13 @@ describe("createTestId", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `npm test -- --run tests/models/test-helpers.test.ts`
 
 Expected: FAIL because the `test` script, Vitest configuration, and helper do not exist.
 
-- [ ] **Step 3: Add the minimal test setup and helper**
+- [x] **Step 3: Add the minimal test setup and helper**
 
 Install `vitest` as a development dependency. Add this script to `package.json`:
 
@@ -92,13 +92,13 @@ export function createTestId(prefix: string, index: number): string {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `npm test -- --run tests/models/test-helpers.test.ts`
 
 Expected: PASS with one test.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add package.json bun.lock vitest.config.ts tests/models/test-helpers.ts tests/models/test-helpers.test.ts
@@ -115,7 +115,7 @@ git commit -m "test: add model test harness"
 - Produces: `FAMILY_MEMBER_ROLE`, `FamilyMemberRole`, `VISIBILITY_SCOPE`, `VisibilityScope`, `UserProfile`, `Family`, `FamilyMembership`, and `ShareTarget`.
 - Consumes: none.
 
-- [ ] **Step 1: Write failing contract tests**
+- [x] **Step 1: Write failing contract tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -133,13 +133,13 @@ describe("user domain constants", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `npm test -- --run tests/models/user-models.test.ts`
 
 Expected: FAIL because `models/user-models.ts` does not exist.
 
-- [ ] **Step 3: Implement the contracts**
+- [x] **Step 3: Implement the contracts**
 
 Create const-derived role and visibility values plus flat interfaces. `ShareTarget` must include `ownerId`, `familyId | null`, `visibility`, and `sharedWithUserIds: readonly string[]`; validate selected-member sharing in repositories rather than with a boolean.
 
@@ -153,13 +153,13 @@ export const VISIBILITY_SCOPE = {
 export type VisibilityScope = (typeof VISIBILITY_SCOPE)[keyof typeof VISIBILITY_SCOPE];
 ```
 
-- [ ] **Step 4: Run verification**
+- [x] **Step 4: Run verification**
 
 Run: `npm test -- --run tests/models/user-models.test.ts && npx tsc --noEmit && npm run lint`
 
 Expected: all commands exit successfully.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add models/user-models.ts tests/models/user-models.test.ts
@@ -176,7 +176,7 @@ git commit -m "feat: add family visibility models"
 - Consumes: `ShareTarget` from `models/user-models.ts`.
 - Produces: `TASK_TYPE`, `TASK_STATUS`, `RECURRENCE_FREQUENCY`, their derived types, and `Task`, `TaskReminder`, `TaskLocation`, and `RecurringTask` interfaces.
 
-- [ ] **Step 1: Write failing model tests**
+- [x] **Step 1: Write failing model tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -205,25 +205,25 @@ describe("task domain constants", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `npm test -- --run tests/models/task-models.test.ts`
 
 Expected: FAIL because `models/task-models.ts` does not exist.
 
-- [ ] **Step 3: Implement the contracts**
+- [x] **Step 3: Implement the contracts**
 
 Define the three const objects and flat interfaces. `Task` must include `id`, `ownerId`, `familyId`, `visibility`, `sharedWithUserIds`, `type`, `status`, `sortOrder`, `title`, `description`, `dueAt`, `blockedReason`, `cancelledReason`, `expenseId`, `location`, `reminders`, `recurringTaskId`, `createdAt`, and `updatedAt`.
 
 `RecurringTask` must include one schedule template, `nextOccurrenceAt`, `defaultExpenseAmountMinor`, `defaultExpenseCurrency`, and `defaultExpenseCategory`; it must not store an array of future task instances.
 
-- [ ] **Step 4: Run verification**
+- [x] **Step 4: Run verification**
 
 Run: `npm test -- --run tests/models/task-models.test.ts && npx tsc --noEmit && npm run lint`
 
 Expected: all commands exit successfully.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add models/task-models.ts tests/models/task-models.test.ts
@@ -242,7 +242,7 @@ git commit -m "feat: add task domain models"
 - Consumes: `ShareTarget`, `Task`, `TaskStatus`.
 - Produces: `EXPENSE_STATUS`, `ExpenseStatus`, `Expense`, `CreateTaskInput`, `UpdateTaskStatusInput`, `CreateExpenseInput`, `TaskRepository`, and `ExpenseRepository`.
 
-- [ ] **Step 1: Write failing contract tests**
+- [x] **Step 1: Write failing contract tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -256,13 +256,13 @@ describe("expense status", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `npm test -- --run tests/models/expense-models.test.ts`
 
 Expected: FAIL because the expense models do not exist.
 
-- [ ] **Step 3: Implement the contracts**
+- [x] **Step 3: Implement the contracts**
 
 `Expense` must include owner/family/visibility sharing fields, amount in minor units, ISO currency, category, optional service subtype, payment status, due date, paid date, and timestamps.
 
@@ -282,13 +282,13 @@ export interface ExpenseRepository {
 }
 ```
 
-- [ ] **Step 4: Run verification**
+- [x] **Step 4: Run verification**
 
 Run: `npm test -- --run tests/models/expense-models.test.ts && npx tsc --noEmit && npm run lint`
 
 Expected: all commands exit successfully.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add models/expense-models.ts repositories/task-repository.ts repositories/expense-repository.ts tests/models/expense-models.test.ts
@@ -307,7 +307,7 @@ git commit -m "feat: add expense repository contracts"
 - Consumes: both repository interfaces and all domain models.
 - Produces: `createMockTaskRepository`, `createMockExpenseRepository`, and fixtures for private, family-wide, selected-member, travel, event, blocked, cancelled, and recurring records.
 
-- [ ] **Step 1: Write failing behavioral tests**
+- [x] **Step 1: Write failing behavioral tests**
 
 ```ts
 import { describe, expect, it } from "vitest";
@@ -329,13 +329,13 @@ describe("mock payment completion", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `npm test -- --run tests/models/mock-repositories.test.ts`
 
 Expected: FAIL because mock repositories and the payment-completion behavior do not exist.
 
-- [ ] **Step 3: Implement deterministic fixtures and repositories**
+- [x] **Step 3: Implement deterministic fixtures and repositories**
 
 Create in-memory arrays cloned per factory call. `TaskMockRepository.updateStatus` must reject `blocked` without `blockedReason`, reject `cancelled` without `cancelledReason`, and call `ExpenseRepository.markPaid` when completing a linked payment task. Add a `createPaymentTaskWithExpense` helper solely on the mock repository for fixture setup; keep it out of `TaskRepository`.
 
@@ -347,13 +347,13 @@ Create fixtures with at least:
 - one planned birthday event with a reminder;
 - one annual subscription recurrence template.
 
-- [ ] **Step 4: Run full verification**
+- [x] **Step 4: Run full verification**
 
 Run: `npm test -- --run && npx tsc --noEmit && npm run lint`
 
 Expected: all tests, strict type-checking, and lint pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add mocks/task-mock-repository.ts mocks/expense-mock-repository.ts mocks/domain-fixtures.ts tests/models/mock-repositories.test.ts
