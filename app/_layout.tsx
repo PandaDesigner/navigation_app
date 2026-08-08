@@ -35,6 +35,10 @@ export default function RootLayout() {
           title: activeItem.label,
         }}
       />
+      <Stack.Screen name="(task)/task" options={{
+        headerShown: true,
+        title: activeItem.label
+      }} />
     </Stack>
   );
 }
