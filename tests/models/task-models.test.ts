@@ -1,3 +1,5 @@
+/// <reference types="jest" />
+
 import {
   RECURRENCE_FREQUENCY,
   TASK_STATUS,

@@ -1,4 +1,5 @@
 import { FAMILY_MEMBER_ROLE, VISIBILITY_SCOPE } from "@/models/user-models";
+import { describe, expect, it } from "@jest/globals";
 
 describe("user domain constants", () => {
   it("defines the supported family roles", () => {
