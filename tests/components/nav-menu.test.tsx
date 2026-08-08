@@ -30,7 +30,7 @@ describe("NavMenu", () => {
   it("opens the enclosing Drawer from a Task route", async () => {
     const { getByRole } = await render(<NavMenu />);
 
-    fireEvent.press(getByRole("button", { name: "Create a new item" }));
+    fireEvent.press(getByRole("button", { name: "Open navigation menu" }));
 
     expect(mockUseNavigation).toHaveBeenCalledWith("/(drawer)");
     expect(mockDispatch).toHaveBeenCalledWith({ type: "OPEN_DRAWER" });
