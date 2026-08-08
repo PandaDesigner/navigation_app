@@ -4,6 +4,7 @@ import {
   useDrawerProgress,
 } from "@react-navigation/drawer";
 import { Pressable, Text, View } from "react-native";
+import { useRouter } from "expo-router";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -49,6 +50,7 @@ function DrawerItem({ focused, icon, index, label, onPress }: DrawerItemProps) {
 }
 
 export function AnimatedDrawerContent({ navigation, state }: DrawerContentComponentProps) {
+  const router = useRouter();
   const activeRouteName = state.routeNames[state.index];
 
   return (
@@ -63,7 +65,7 @@ export function AnimatedDrawerContent({ navigation, state }: DrawerContentCompon
           index={index}
           label={item.label}
           onPress={() => {
-            navigation.navigate(item.drawerRoute);
+            router.replace(item.href);
             navigation.closeDrawer();
           }}
         />
