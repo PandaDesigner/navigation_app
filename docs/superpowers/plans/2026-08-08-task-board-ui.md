@@ -43,7 +43,7 @@
 **Interfaces:**
 - Produces: `npm test -- --runInBand` executes all existing model tests through `jest-expo`.
 
-- [ ] **Step 1: Verify the current runner fails to execute Jest tests**
+- [x] **Step 1: Verify the current runner fails to execute Jest tests**
 
 Run:
 
@@ -53,7 +53,7 @@ npm test -- --runInBand
 
 Expected: FAIL because `package.json` still points to Vitest.
 
-- [ ] **Step 2: Configure Jest and migrate test imports**
+- [x] **Step 2: Configure Jest and migrate test imports**
 
 Create `jest.config.js`:
 
@@ -63,7 +63,8 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   },
-  testMatch: ["<rootDir>/tests/**/*-test.ts"],
+  roots: ["<rootDir>/tests"],
+  testMatch: ["**/*.test.ts"],
 };
 ```
 
@@ -81,7 +82,7 @@ describe("task statuses", () => {
 
 Set the package script to `"test": "jest"`, remove `vitest`, delete `vitest.config.ts`, and install `@testing-library/react-native` using `bunx expo install @testing-library/react-native --dev`.
 
-- [ ] **Step 3: Verify and commit**
+- [x] **Step 3: Verify and commit**
 
 Run:
 

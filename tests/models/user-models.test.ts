@@ -1,5 +1,3 @@
-import { describe, expect, it } from "vitest";
-
 import { FAMILY_MEMBER_ROLE, VISIBILITY_SCOPE } from "@/models/user-models";
 
 describe("user domain constants", () => {

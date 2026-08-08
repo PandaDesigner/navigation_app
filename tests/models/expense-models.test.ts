@@ -1,5 +1,3 @@
-import { describe, expect, it } from "vitest";
-
 import { EXPENSE_STATUS } from "@/models/expense-models";
 
 describe("expense status", () => {

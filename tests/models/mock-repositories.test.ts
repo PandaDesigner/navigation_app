@@ -1,5 +1,3 @@
-import { describe, expect, it } from "vitest";
-
 import {
   BLOCKED_TRIP_TASK_FIXTURE,
   CANCELLED_TASK_FIXTURE,
