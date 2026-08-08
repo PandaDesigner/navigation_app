@@ -80,6 +80,24 @@ const WEEKLY_RECURRING_TASK: RecurringTask = {
   updatedAt: "2026-08-08T12:00:00.000Z",
 };
 
+const QUARTERLY_RECURRING_TASK: RecurringTask = {
+  ...WEEKLY_RECURRING_TASK,
+  id: "recurring-quarterly-planning",
+  scheduleTemplate: {
+    ...WEEKLY_RECURRING_TASK.scheduleTemplate,
+    frequency: RECURRENCE_FREQUENCY.QUARTERLY,
+  },
+};
+
+const ANNUAL_RECURRING_TASK: RecurringTask = {
+  ...WEEKLY_RECURRING_TASK,
+  id: "recurring-annual-planning",
+  scheduleTemplate: {
+    ...WEEKLY_RECURRING_TASK.scheduleTemplate,
+    frequency: RECURRENCE_FREQUENCY.ANNUALLY,
+  },
+};
+
 describe("mock payment completion", () => {
   it("marks a linked expense paid when a payment task completes", async () => {
     const expenses = createMockExpenseRepository();
@@ -414,6 +432,79 @@ describe("lazy recurring task generation", () => {
         recurringTaskId: WEEKLY_RECURRING_TASK.id,
       }),
     ]);
+  });
+
+  it("generates a quarterly next occurrence on completion beyond the proactive horizon", async () => {
+    const expenses = createMockExpenseRepository();
+    const tasks = createMockTaskRepository(expenses, {
+      recurringTasks: [QUARTERLY_RECURRING_TASK],
+    });
+    const [current] = await tasks.generateRecurringInstances({
+      ...initialGeneration,
+      ownerId: QUARTERLY_RECURRING_TASK.ownerId,
+    });
+
+    await tasks.updateStatus({
+      taskId: current.id,
+      status: TASK_STATUS.COMPLETED,
+    });
+
+    const ownerTasks = await tasks.listByOwner(QUARTERLY_RECURRING_TASK.ownerId);
+    expect(
+      ownerTasks.filter(
+        (task) => task.recurringTaskId === QUARTERLY_RECURRING_TASK.id,
+      ),
+    ).toEqual([
+      expect.objectContaining({
+        id: current.id,
+        status: TASK_STATUS.COMPLETED,
+      }),
+      expect.objectContaining({
+        dueAt: "2026-11-08T13:00:00.000Z",
+        status: TASK_STATUS.PLANNED,
+      }),
+    ]);
+  });
+
+  it("generates an annual next occurrence on expiry beyond the proactive horizon", async () => {
+    const expenses = createMockExpenseRepository();
+    const tasks = createMockTaskRepository(expenses, {
+      recurringTasks: [ANNUAL_RECURRING_TASK],
+    });
+    await tasks.generateRecurringInstances({
+      ...initialGeneration,
+      ownerId: ANNUAL_RECURRING_TASK.ownerId,
+    });
+
+    const generated = await tasks.generateRecurringInstances({
+      ownerId: ANNUAL_RECURRING_TASK.ownerId,
+      asOf: ANNUAL_RECURRING_TASK.nextOccurrenceAt,
+    });
+
+    expect(generated).toEqual([
+      expect.objectContaining({
+        dueAt: "2027-08-08T13:00:00.000Z",
+        recurringTaskId: ANNUAL_RECURRING_TASK.id,
+      }),
+    ]);
+  });
+
+  it("keeps the four-week horizon for proactive annual generation", async () => {
+    const expenses = createMockExpenseRepository();
+    const futureAnnualTask: RecurringTask = {
+      ...ANNUAL_RECURRING_TASK,
+      nextOccurrenceAt: "2027-08-08T13:00:00.000Z",
+    };
+    const tasks = createMockTaskRepository(expenses, {
+      recurringTasks: [futureAnnualTask],
+    });
+
+    await expect(
+      tasks.generateRecurringInstances({
+        ownerId: futureAnnualTask.ownerId,
+        asOf: "2026-08-08T13:00:00.000Z",
+      }),
+    ).resolves.toEqual([]);
   });
 });
 

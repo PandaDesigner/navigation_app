@@ -32,6 +32,11 @@ export interface CreateMockTaskRepositoryOptions {
   recurringTasks?: readonly RecurringTask[];
 }
 
+interface RecurringGenerationOptions {
+  recurringTaskId?: string;
+  ignoreLookAhead?: boolean;
+}
+
 const FOUR_WEEKS_IN_MILLISECONDS = 28 * 24 * 60 * 60 * 1_000;
 
 function cloneTask(task: Task): Task {
@@ -166,7 +171,7 @@ export function createMockTaskRepository(
 
   async function generateRecurringInstances(
     input: GenerateRecurringInstancesInput,
-    recurringTaskId?: string,
+    generationOptions: RecurringGenerationOptions = {},
   ): Promise<readonly Task[]> {
     const asOfTimestamp = parseTimestamp(input.asOf);
     const lookAheadTimestamp = asOfTimestamp + FOUR_WEEKS_IN_MILLISECONDS;
@@ -175,7 +180,8 @@ export function createMockTaskRepository(
     for (const recurringTask of recurringTasks) {
       if (
         recurringTask.ownerId !== input.ownerId ||
-        (recurringTaskId && recurringTask.id !== recurringTaskId)
+        (generationOptions.recurringTaskId &&
+          recurringTask.id !== generationOptions.recurringTaskId)
       ) {
         continue;
       }
@@ -194,9 +200,19 @@ export function createMockTaskRepository(
           task.dueAt !== null &&
           parseTimestamp(task.dueAt) > asOfTimestamp,
       );
+      const hasExpiredInstance = tasks.some(
+        (task) =>
+          task.recurringTaskId === recurringTask.id &&
+          task.status !== TASK_STATUS.COMPLETED &&
+          task.status !== TASK_STATUS.CANCELLED &&
+          task.dueAt !== null &&
+          parseTimestamp(task.dueAt) <= asOfTimestamp,
+      );
+      const enforceLookAhead =
+        !generationOptions.ignoreLookAhead && !hasExpiredInstance;
 
       if (
-        occurrenceTimestamp > lookAheadTimestamp ||
+        (enforceLookAhead && occurrenceTimestamp > lookAheadTimestamp) ||
         (endsAtTimestamp !== null && occurrenceTimestamp > endsAtTimestamp) ||
         hasUnexpiredInstance
       ) {
@@ -314,7 +330,10 @@ export function createMockTaskRepository(
             ownerId: currentTask.ownerId,
             asOf: MOCK_OPERATION_TIMESTAMP,
           },
-          currentTask.recurringTaskId,
+          {
+            recurringTaskId: currentTask.recurringTaskId,
+            ignoreLookAhead: true,
+          },
         );
       }
 
