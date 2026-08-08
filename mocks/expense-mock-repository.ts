@@ -6,6 +6,7 @@ import type {
   CreateExpenseInput,
   ExpenseRepository,
 } from "../repositories/expense-repository";
+import { validateShareTarget } from "../repositories/share-target-validation";
 import {
   EXPENSE_FIXTURES,
   MOCK_CREATED_AT,
@@ -44,6 +45,7 @@ export function createMockExpenseRepository(): ExpenseMockRepository {
     },
 
     async create(input: CreateExpenseInput) {
+      validateShareTarget(input);
       createdExpenseCount += 1;
       const expense: Expense = {
         ...input,
@@ -64,6 +66,10 @@ export function createMockExpenseRepository(): ExpenseMockRepository {
 
       if (expenseIndex === -1) {
         throw new Error(`Expense not found: ${expenseId}`);
+      }
+
+      if (expenses[expenseIndex].status === EXPENSE_STATUS.CANCELLED) {
+        throw new Error(`A cancelled expense cannot be paid: ${expenseId}`);
       }
 
       const paidExpense: Expense = {
