@@ -25,7 +25,7 @@ export const navigationItems = [
     id: "task",
     label: "Task",
     href: "/task",
-    drawerRoute: "task",
+    drawerRoute: "(task)",
     tabIcon: "checkbox-outline",
     drawerIcon: "checkbox-outline",
     showInNavMenu: true,

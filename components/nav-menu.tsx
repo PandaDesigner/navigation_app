@@ -7,7 +7,7 @@ import { navMenuItems } from "@/constant/item-nav";
 import { TabButton } from "./tab-buttons";
 
 const NavMenu = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation("/(drawer)");
     const pathname = usePathname();
     const router = useRouter();
 
