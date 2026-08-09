@@ -17,6 +17,7 @@ export default function DrawerLayout() {
                 headerTitleAlign: "left",
                 headerTitleStyle: { fontSize: 24, fontWeight: "700", color: "#4B3F66" },
                 headerShadowVisible: false,
+                headerLeft: () => null,
                 headerRight: () => <TaskHeaderMenu />
             }}
         >

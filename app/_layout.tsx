@@ -31,7 +31,7 @@ export default function RootLayout() {
       <Stack.Screen
         name="(drawer)"
         options={{
-          headerShown: true,
+          headerShown: false,
           title: activeItem.label,
         }}
       />
