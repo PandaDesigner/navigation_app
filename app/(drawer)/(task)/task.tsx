@@ -13,7 +13,7 @@ const tasks = [
 
 export default function TaskPage() {
   return <View className="flex-1 bg-[#FCFBFD] px-4 pt-16">
-    <View className="mb-6 flex-row items-center justify-between"><Text className="text-4xl font-bold text-[#4B3F66]">Tareas</Text><Ionicons name="options-outline" size={28} color="#4B3F66" /></View>
+    
     <View className="mb-5 flex-row items-center rounded-2xl border border-[#E5DFEC] bg-white px-4 py-3"><Ionicons name="search-outline" size={24} color="#625A72" /><TextInput placeholder="Buscar tareas" placeholderTextColor="#8E849F" className="ml-3 flex-1 text-lg text-[#4B3F66]" /></View>
     <View className="mb-5 flex-row overflow-hidden rounded-2xl border border-[#E5DFEC] bg-white"><Text className="flex-1 rounded-2xl bg-[#4B3F66] py-3 text-center font-semibold text-white">Lista</Text><Text className="flex-1 py-3 text-center font-semibold text-[#4B3F66]">Kanban</Text><Text className="flex-1 py-3 text-center font-semibold text-[#4B3F66]">Calendario</Text></View>
     <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-4"><View className="flex-row gap-3"><Text className="rounded-full bg-[#4B3F66] px-5 py-3 font-semibold text-white">Todas</Text>{["Hoy","Próximas","Bloqueadas"].map(x=><Text key={x} className="rounded-full border border-[#E5DFEC] bg-white px-5 py-3 font-semibold text-[#625A72]">{x}</Text>)}</View></ScrollView>

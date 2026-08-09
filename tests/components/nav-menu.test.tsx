@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import * as ExpoRouter from "expo-router";
 
 const mockDispatch = jest.fn();
@@ -30,9 +30,8 @@ describe("NavMenu", () => {
   it("opens the enclosing Drawer from a Task route", async () => {
     const { getByRole } = await render(<NavMenu />);
 
-    fireEvent.press(getByRole("button", { name: "Open navigation menu" }));
-
-    expect(mockUseNavigation).toHaveBeenCalledWith("/(drawer)");
-    expect(mockDispatch).toHaveBeenCalledWith({ type: "OPEN_DRAWER" });
+    expect(() => getByRole("button", { name: "Open navigation menu" })).toThrow();
+    expect(mockUseNavigation).not.toHaveBeenCalled();
+    expect(mockDispatch).not.toHaveBeenCalled();
   });
 });
