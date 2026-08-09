@@ -18,7 +18,9 @@ export function TabButton({
     return (
         <Pressable
             onPress={onPress}
-            className={`flex-row items-center gap-2 rounded-full px-4 py-3 ${active ? "bg-zinc-800" : "bg-transparent"
+            className={`flex-row items-center gap-2 rounded-full px-4 py-3 ${active
+                ? "bg-[#4B3E67]"
+                : "bg-transparent"
                 }`}
         >
             <Ionicons
@@ -26,7 +28,7 @@ export function TabButton({
                 size={22}
                 color={active ? "#ffffff" : "#737373"}
             />
-            <Text className={active ? "font-semibold text-white" : "text-zinc-500"}>
+            <Text className={active ? "font-semibold text-white" : "text-[#565267]"}>
                 {label}
             </Text>
         </Pressable>

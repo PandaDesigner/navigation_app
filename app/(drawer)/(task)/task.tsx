@@ -8,7 +8,7 @@ export default function TaskPage() {
 
     return (
         <View className="flex-1 items-center justify-center bg-white">
-            <Text className="text-xl font-bold text-blue-500">
+            <Text className="text-xl font-bold text-[#4B3E67]">
                 {(navigationItems.find(item => item.href === pathname) ?? navigationItems[0]).label}
             </Text>
             <NavMenu />

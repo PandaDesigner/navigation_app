@@ -10,8 +10,8 @@ export default function RootLayout() {
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: "#111827" },
-        headerTintColor: "#fff",
+        headerStyle: { backgroundColor: "#ece7f6" },
+        headerTintColor: "##565267",
         headerTitleStyle: { fontWeight: 300 },
         headerTitleAlign: "center",
         headerShadowVisible: false,
@@ -21,8 +21,8 @@ export default function RootLayout() {
           return (<Pressable
             className="flex-row items-center gap-0 px-3 py-2"
           >
-            <Ionicons name="chevron-back" size={24} color="#fff" />
-            <Text className="text-white text-lg ml-4">Back</Text>
+            <Ionicons name="chevron-back" size={24} color="##565267" />
+            <Text className="text-[##565267] text-lg ml-4">Back</Text>
           </Pressable>)
         }
       }}

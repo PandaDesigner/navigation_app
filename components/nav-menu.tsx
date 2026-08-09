@@ -13,7 +13,7 @@ const NavMenu = () => {
 
     return (
         <View className="absolute bottom-8 left-5 right-5 flex-row items-center justify-between">
-            <View className="flex-row rounded-full bg-zinc-100 p-2">
+            <View className="flex-row rounded-full bg-[#ece7f6] p-2">
                 {navMenuItems.map((item) => (
                     <TabButton
                         key={item.id}
@@ -29,9 +29,9 @@ const NavMenu = () => {
                 accessibilityRole="button"
                 accessibilityLabel="Create a new item"
                 onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-                className="rounded-full bg-zinc-100 p-4"
+                className="rounded-full bg-[#565267] p-4"
             >
-                <Ionicons name="add" size={30} color="#737373" />
+                <Ionicons name="add" size={30} color="#ece7f6" />
             </Pressable>
         </View>
     );
